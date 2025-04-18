@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adobe Creative Cloud</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      }
+
+      body {
+        background-color: #232534;
+        color: white;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .container {
+        display: flex;
+        height: 100vh;
+      }
+
+      /* Sidebar */
+      .sidebar {
+        width: 140px;
+        background-color: #1c1e2a;
+        padding: 20px 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .window-controls {
+        display: flex;
+        padding: 0 15px 25px 15px;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+
+      .dot.red {
+        background-color: #ff5f57;
+      }
+
+      .dot.yellow {
+        background-color: #febc2e;
+      }
+
+      .dot.green {
+        background-color: #28c840;
+      }
+
+      .sidebar-section {
+        margin-bottom: 25px;
+      }
+
+      .sidebar-title {
+        font-size: 12px;
+        color: #8d8d95;
+        padding: 0 15px 10px 15px;
+      }
+
+      .sidebar-item {
+        display: flex;
+        align-items: center;
+        padding: 8px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #e0e0e0;
+      }
+
+      .sidebar-item:hover {
+        background-color: #2a2c3d;
+      }
+
+      .sidebar-item.active {
+        background-color: #2a2c3d;
+      }
+
+      .sidebar-item img {
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+      }
+
+      .badge {
+        background-color: #0d6efd;
+        color: white;
+        font-size: 10px;
+        border-radius: 10px;
+        padding: 2px 6px;
+        margin-left: auto;
+      }
+
+      /* Main Content */
+      .main-content {
+        flex: 1;
+        padding: 20px;
+        overflow-y: auto;
+      }
+
+      .top-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+      }
+
+      .nav-tabs {
+        display: flex;
+        gap: 15px;
+      }
+
+      .nav-tab {
+        padding: 5px 15px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #a8a8b3;
+      }
+
+      .nav-tab.active {
+        color: white;
+        font-weight: 500;
+        border-bottom: 2px solid #0d6efd;
+      }
+
+      .search-container {
+        display: flex;
+        background-color: #2a2c3d;
+        border-radius: 5px;
+        padding: 8px 15px;
+        width: 300px;
+      }
+
+      .search-container input {
+        background: transparent;
+        border: none;
+        outline: none;
+        color: white;
+        width: 100%;
+      }
+
+      .search-container .search-icon {
+        color: #8d8d95;
+        margin-right: 10px;
+      }
+
+      .user-controls {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+
+      .icon-button {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .user-avatar {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        cursor: pointer;
+        object-fit: cover;
+      }
+
+      /* Tabs Content */
+      .tab-content {
+        margin-top: 10px;
+      }
+
+      .tabs-header {
+        display: flex;
+        border-bottom: 1px solid #323445;
+        margin-bottom: 20px;
+      }
+
+      .tab {
+        padding: 10px 25px;
+        cursor: pointer;
+        font-size: 14px;
+        color: #a8a8b3;
+      }
+
+      .tab.active {
+        color: white;
+        border-bottom: 2px solid #0d6efd;
+      }
+
+      /* Adobe Stock Banner */
+      .adobe-stock-banner {
+        background: linear-gradient(90deg, #ff3366 0%, #ff9933 100%);
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .banner-content {
+        max-width: 60%;
+      }
+
+      .banner-logo {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+
+      .adobe-icon {
+        width: 30px;
+        height: 30px;
+        background-color: #232534;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 5px;
+        margin-right: 10px;
+        font-weight: bold;
+      }
+
+      .banner-title {
+        font-size: 18px;
+        font-weight: 500;
+      }
+
+      .banner-description {
+        font-size: 14px;
+        line-height: 1.5;
+        margin-bottom: 15px;
+      }
+
+      .banner-button {
+        background-color: #ff3366;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 8px 20px;
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .banner-image {
+        width: 200px;
+        text-align: right;
+      }
+
+      /* App Cards */
+      .section-title {
+        font-size: 14px;
+        color: #a8a8b3;
+        margin-bottom: 15px;
+      }
+
+      .app-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 15px;
+      }
+
+      .app-card {
+        background-color: #2a2c3d;
+        border-radius: 8px;
+        padding: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+
+      .app-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .app-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 8px;
+        margin-right: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-weight: bold;
+      }
+
+      .ps {
+        background-color: #31a8ff;
+      }
+
+      .ai {
+        background-color: #ff9a00;
+      }
+
+      .ae {
+        background-color: #9999ff;
+      }
+
+      .app-name {
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .app-status {
+        display: flex;
+        align-items: center;
+        font-size: 12px;
+        color: #a8a8b3;
+        margin-top: 5px;
+      }
+
+      .status-dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background-color: #0d6efd;
+        margin-right: 5px;
+      }
+
+      .app-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .action-button {
+        background-color: #4050b5;
+        color: white;
+        border: none;
+        border-radius: 20px;
+        padding: 6px 15px;
+        font-size: 12px;
+        cursor: pointer;
+      }
+
+      .action-button.outline {
+        background-color: transparent;
+        border: 1px solid #4d4f5e;
+        color: #e0e0e0;
+      }
+
+      .more-options {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+      }
+
+      .more-options:hover {
+        background-color: #3a3c4d;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Left Sidebar -->
+      <div class="sidebar">
+        <div class="window-controls">
+          <div class="dot red"></div>
+          <div class="dot yellow"></div>
+          <div class="dot green"></div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-item active">
+            <img src="https://picsum.photos/20/20" alt="All Apps" />
+            <span>All Apps</span>
+          </div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="Updates" />
+            <span>Updates</span>
+            <span class="badge">3</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Categories</div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="Photography" />
+            <span>Photography</span>
+          </div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="Graphic Design" />
+            <span>Graphic Design</span>
+          </div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="Video" />
+            <span>Video</span>
+          </div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="Illustrations" />
+            <span>Illustrations</span>
+          </div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="UI/UX" />
+            <span>UI/UX</span>
+          </div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="3D/AR" />
+            <span>3D/AR</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Fonts</div>
+          <div class="sidebar-item">
+            <img src="https://picsum.photos/20/20" alt="Manage Fonts" />
+            <span>Manage Fonts</span>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <div class="sidebar-title">Resource Links</div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <div class="top-navigation">
+          <div class="nav-tabs">
+            <div class="nav-tab">Apps</div>
+            <div class="nav-tab">Your work</div>
+            <div class="nav-tab">Discover</div>
+            <div class="nav-tab active">Market</div>
+          </div>
+
+          <div class="search-container">
+            <span class="search-icon">🔍</span>
+            <input type="text" placeholder="Search" />
+          </div>
+
+          <div class="user-controls">
+            <div class="icon-button">🔔</div>
+            <div class="icon-button">⚙️</div>
+            <img
+              class="user-avatar"
+              src="https://picsum.photos/48/48"
+              alt="User Avatar"
+            />
+          </div>
+        </div>
+
+        <div class="tab-content">
+          <div class="tabs-header">
+            <div class="tab active">All Apps</div>
+            <div class="tab">Desktop</div>
+            <div class="tab">Mobile</div>
+            <div class="tab">Web</div>
+          </div>
+
+          <!-- Adobe Stock Banner -->
+          <div class="adobe-stock-banner">
+            <div class="banner-content">
+              <div class="banner-logo">
+                <div class="adobe-icon">St</div>
+                <div class="banner-title">Adobe Stock</div>
+              </div>
+              <div class="banner-description">
+                Grab yourself 10 free images from Adobe Stock in a 30-day free
+                trial plan and find perfect image that will help you with your
+                new project.
+              </div>
+              <button class="banner-button">Start free trial</button>
+            </div>
+            <div class="banner-image">
+              <img src="https://picsum.photos/150/150" alt="Adobe Stock" />
+            </div>
+          </div>
+
+          <!-- Installed Apps -->
+          <div class="section-title">Installed</div>
+          <div class="app-cards">
+            <div class="app-card">
+              <div class="app-info">
+                <div class="app-icon ps">Ps</div>
+                <div>
+                  <div class="app-name">Photoshop</div>
+                  <div class="app-status">
+                    <span class="status-dot"></span>
+                    <span>Updated</span>
+                  </div>
+                </div>
+              </div>
+              <div class="app-actions">
+                <button class="action-button outline">Open</button>
+                <div class="more-options">⋯</div>
+              </div>
+            </div>
+
+            <div class="app-card">
+              <div class="app-info">
+                <div class="app-icon ai">Ai</div>
+                <div>
+                  <div class="app-name">Illustrator</div>
+                  <div class="app-status">
+                    <span class="status-dot"></span>
+                    <span>Update Available</span>
+                  </div>
+                </div>
+              </div>
+              <div class="app-actions">
+                <button class="action-button">Update the app</button>
+                <div class="more-options">⋯</div>
+              </div>
+            </div>
+
+            <div class="app-card">
+              <div class="app-info">
+                <div class="app-icon ae">Ae</div>
+                <div>
+                  <div class="app-name">After Effects</div>
+                  <div class="app-status">
+                    <span class="status-dot"></span>
+                    <span>Updated</span>
+                  </div>
+                </div>
+              </div>
+              <div class="app-actions">
+                <button class="action-button outline">Open</button>
+                <div class="more-options">⋯</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
